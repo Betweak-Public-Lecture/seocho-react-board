@@ -1,3 +1,4 @@
+import React, {useState, useEffect, useCallback} from 'react';
 import "./App.css";
 import HelloWorld from "./components/HelloWorld/HelloWorld";
 import ClassHelloWorld from "./components/ClassHelloWorld/ClassHelloWorld";
@@ -5,7 +6,47 @@ import CaptionImage from "./components/CaptionImage/CaptionImage";
 import Blink from "./components/Blink/Blink";
 import BlinkBox from "./components/BlinkBox/BlinkBox";
 
+/**
+ * react-router-dom
+ */
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+/**
+ * Pages
+ */
+import Home from "./pages/Home/Home";
+import BoardList from "./pages/BoardList/BoardList";
+import WriteBoard from "./pages/WriteBoard/WriteBoard";
+import BoardDetail from "./pages/BoardDetail/BoardDetail";
+
+/**
+ * Component
+ */
+import Navbar from "./components/Navbar/Navbar";
+
+import board from "./mock/board";
+
 function App() {
+  const [boardList, setBoardList] = useState(board);
+  return (
+    <Router>
+      <Navbar />
+
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route
+          path="/board"
+          exact
+          component={(props) => <BoardList {...props} boardList={boardList} />}
+        />
+        <Route path="/board/write" exact component={WriteBoard} />
+        <Route path="/board/:boardId" exact component={BoardDetail} />
+      </Switch>
+    </Router>
+  );
+}
+
+function App2() {
   return (
     <div className="App">
       {/* <HelloWorld /> */}
@@ -26,7 +67,7 @@ function App() {
         caption="이건 트럭입니다."
       /> */}
       {/* <Blink text="이 글자는 3초에 한 번씩 깜빡입니다." /> */}
-      <BlinkBox text="이 글자는 3초에 한 번씩 깜빡입니다." ms={3000} />
+      {/* <BlinkBox text="이 글자는 3초에 한 번씩 깜빡입니다." ms={3000} /> */}
     </div>
   );
 }
