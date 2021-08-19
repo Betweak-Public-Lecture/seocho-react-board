@@ -4,7 +4,7 @@ import React, { useState } from "react";
  */
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
-function WriteBoard(props) {
+function WriteBoard({ onWrite, match, location, history }) {
   /**
    * 연습문제1. react-bootstrap을 이용해서 \
    * 반응형 grid 구성.
@@ -18,6 +18,12 @@ function WriteBoard(props) {
    * 연습문제3.
    * content(textarea에서)를 입력받고
    * hook을사용해서 state로 관리하여라 [content, setContent]
+   */
+
+  /**
+   * 연습문제4. 글쓰기
+   * - 글 작성을 클릭하면 저장된 title과 content가 글쓰기 기능을 실행하여야 한다.
+   * - title과 content 둘 중 하나라도 비어 있으면 글 작성이 안되고 경고창(alert)을 발생시켜라.
    */
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -57,7 +63,22 @@ function WriteBoard(props) {
               />
             </Form.Group>
             <div style={{ float: "right" }}>
-              <Button variant="outline-secondary">작성</Button>
+              <Button
+                variant="outline-secondary"
+                onClick={() => {
+                  // - title과 content 둘 중 하나라도 비어 있으면 글 작성이 안되고 경고창(alert)을 발생시켜라.
+                  if (!title || !content) {
+                    alert("title과 content 모두 작성이 되어야 합니다.");
+                    return false;
+                  } else {
+                    onWrite(title, content);
+                    alert(`게시글 <${title}> 작성이 완료되었습니다.`);
+                    history.push("/board");
+                  }
+                }}
+              >
+                작성
+              </Button>
             </div>
           </Form>
         </Col>

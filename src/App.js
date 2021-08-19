@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import HelloWorld from "./components/HelloWorld/HelloWorld";
 import ClassHelloWorld from "./components/ClassHelloWorld/ClassHelloWorld";
@@ -27,7 +27,30 @@ import Navbar from "./components/Navbar/Navbar";
 import board from "./mock/board";
 
 function App() {
+  /**
+   * 연습문제 1. 데이터 추가
+   * - App.js에서 boardList에 데이터를 추가하는 함수를 작성하여라.
+   * - 이를 WriteBoard 컴포넌트에 전달하여라
+   * - ** 배열 관련함수 사용(배열에 데이터 추가. push X)
+   */
+
+  const [boardIdCounter, setBoardIdCounter] = useState(3);
   const [boardList, setBoardList] = useState(board);
+
+  const addBoardItem = useCallback(
+    (title, content) => {
+      //concat : 배열 관련함수 - 새로운 배열을 만든다.
+      const newBoardList = boardList.concat({
+        id: boardIdCounter,
+        title: title,
+        content: content,
+      });
+      setBoardList(newBoardList);
+      setBoardIdCounter(boardIdCounter + 1);
+    },
+    [boardList, boardIdCounter]
+  );
+
   return (
     <Router>
       <Navbar />
@@ -39,7 +62,13 @@ function App() {
           exact
           component={(props) => <BoardList {...props} boardList={boardList} />}
         />
-        <Route path="/board/write" exact component={WriteBoard} />
+        <Route
+          path="/board/write"
+          exact
+          component={(props) => (
+            <WriteBoard {...props} onWrite={addBoardItem} />
+          )}
+        />
         <Route path="/board/:boardId" exact component={BoardDetail} />
       </Switch>
     </Router>
