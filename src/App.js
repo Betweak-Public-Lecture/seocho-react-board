@@ -18,6 +18,7 @@ import Home from "./pages/Home/Home";
 import BoardList from "./pages/BoardList/BoardList";
 import WriteBoard from "./pages/WriteBoard/WriteBoard";
 import BoardDetail from "./pages/BoardDetail/BoardDetail";
+import BoardEdit from "./pages/BoardEdit/BoardEdit";
 
 /**
  * Component
@@ -45,6 +46,21 @@ function App() {
    * - boardDelete 함수를 App.js에서 선언(표현)
    * - boardDetail에 삭제 버튼에 연결
    * - 삭제후엔 BoardList컴포넌트로 이동.
+   */
+
+  /**
+   * 연습문제4. BoardEdit Component
+    1. BoardEdit 컴포넌트 생성
+    2. BoardEdit 컴포넌트 디자인 = WriteBoard.js와 같음.
+    3. BoardEdit 컴포넌트의 form에는 초기값 설정(기존 저장되있는 값)
+    4. Router 연결
+   */
+
+  /**
+   * 연습문제5. BoardEdit 기능 구현
+    1. App.js에 editBoardItem 구현
+    2. BoardEdit 컴포넌트에 onEdit props 전달
+    3. BoardEdit컴포넌트에 onEdit 호출
    */
 
   const [boardIdCounter, setBoardIdCounter] = useState(3);
@@ -76,6 +92,24 @@ function App() {
     },
     [boardList]
   );
+  const editBoardItem = useCallback(
+    (boardId, title, content)=>{
+      const newBoardList = boardList.map(function (item) {
+        if (item.id === boardId){
+          // 수정
+          return {
+            ...item, //기존 값
+            title: title,
+            content: content
+          }
+        } else{
+          return item;
+        }
+      });
+      setBoardList(newBoardList);
+    },
+    [boardList]
+  )
 
   return (
     <Router>
@@ -103,6 +137,17 @@ function App() {
               {...props}
               boardList={boardList}
               onDelete={deleteBoardItem}
+            />
+          )}
+        />
+        <Route 
+          path="/board/:boardId/edit"
+          exact
+          component={(props)=>(
+            <BoardEdit
+              {...props}
+              boardList={boardList}
+              onEdit={editBoardItem}
             />
           )}
         />

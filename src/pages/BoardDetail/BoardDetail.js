@@ -53,7 +53,10 @@ function BoardDetail({ boardList, onDelete, match, history }) {
       <Row className="my-3">
         <Col>
           <div className="mx-2" style={{ float: "right" }}>
-            <Button variant="outline-info">수정</Button>
+            <Button variant="outline-info" onClick={(e)=>{
+              e.preventDefault();
+              history.push(`/board/${boardId}/edit`);
+            }}>수정</Button>
           </div>
           <div className="mx-2" style={{ float: "right" }}>
             <Button variant="outline-danger" onClick={()=>{
