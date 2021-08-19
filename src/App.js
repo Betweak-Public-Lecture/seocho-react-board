@@ -34,6 +34,12 @@ function App() {
    * - ** 배열 관련함수 사용(배열에 데이터 추가. push X)
    */
 
+  /** 연습문제 2. boardDetail
+   * - App.js에서 boardDetail에 boardList를 전달.
+   * - boardDetail에선 boardList를 받아서 target이 되는 boardId에 맞는 데이터를 가지고
+   * - 해당 내용 rendering (title, content)
+   */
+
   const [boardIdCounter, setBoardIdCounter] = useState(3);
   const [boardList, setBoardList] = useState(board);
 
@@ -69,7 +75,13 @@ function App() {
             <WriteBoard {...props} onWrite={addBoardItem} />
           )}
         />
-        <Route path="/board/:boardId" exact component={BoardDetail} />
+        <Route
+          path="/board/:boardId"
+          exact
+          component={(props) => (
+            <BoardDetail {...props} boardList={boardList} />
+          )}
+        />
       </Switch>
     </Router>
   );
