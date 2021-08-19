@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 
-function BoardDetail({ boardList, match, history }) {
+function BoardDetail({ boardList, onDelete, match, history }) {
   const [board, setBoard] = useState({
-    id: '',
-    title: '',
-    content: ''
+    id: "",
+    title: "",
+    content: "",
   });
   const boardId = match.params.boardId;
 
-  useEffect(()=>{
+  useEffect(() => {
     const boardItem = boardList.filter(function (item) {
       if (item.id === Number.parseInt(boardId)) {
         return true;
@@ -20,10 +20,9 @@ function BoardDetail({ boardList, match, history }) {
       alert("게시글이 없습니다.");
       history.push("/board");
     }
-    const board = setBoard(boardItem[0]);
-  }, [])
+    setBoard(boardItem[0]);
+  }, []);
 
-  
   return (
     <Container>
       <Row>
@@ -48,6 +47,19 @@ function BoardDetail({ boardList, match, history }) {
             }}
           >
             {board.content}
+          </div>
+        </Col>
+      </Row>
+      <Row className="my-3">
+        <Col>
+          <div className="mx-2" style={{ float: "right" }}>
+            <Button variant="outline-info">수정</Button>
+          </div>
+          <div className="mx-2" style={{ float: "right" }}>
+            <Button variant="outline-danger" onClick={()=>{
+              onDelete(Number.parseInt(boardId));
+              history.push('/board');
+            }}>삭제</Button>
           </div>
         </Col>
       </Row>

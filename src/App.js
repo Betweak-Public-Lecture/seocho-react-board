@@ -40,6 +40,13 @@ function App() {
    * - 해당 내용 rendering (title, content)
    */
 
+  /**
+   * 연습문제3. boardDelete 함수 생성
+   * - boardDelete 함수를 App.js에서 선언(표현)
+   * - boardDetail에 삭제 버튼에 연결
+   * - 삭제후엔 BoardList컴포넌트로 이동.
+   */
+
   const [boardIdCounter, setBoardIdCounter] = useState(3);
   const [boardList, setBoardList] = useState(board);
 
@@ -55,6 +62,19 @@ function App() {
       setBoardIdCounter(boardIdCounter + 1);
     },
     [boardList, boardIdCounter]
+  );
+  const deleteBoardItem = useCallback(
+    (boardId) => {
+      const newBoardList = boardList.filter(function (item) {
+        if (item.id === boardId) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      setBoardList(newBoardList);
+    },
+    [boardList]
   );
 
   return (
@@ -79,7 +99,11 @@ function App() {
           path="/board/:boardId"
           exact
           component={(props) => (
-            <BoardDetail {...props} boardList={boardList} />
+            <BoardDetail
+              {...props}
+              boardList={boardList}
+              onDelete={deleteBoardItem}
+            />
           )}
         />
       </Switch>
