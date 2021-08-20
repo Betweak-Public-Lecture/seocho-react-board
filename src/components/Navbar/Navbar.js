@@ -8,7 +8,7 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 
-function Navbar(props) {
+function Navbar({ web3 }) {
   return (
     <BSNavbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -25,6 +25,9 @@ function Navbar(props) {
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">
               Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/zombies">
+              Zombies
             </Nav.Link>
             <Nav.Link as={Link} to="/board">
               게시글
@@ -49,6 +52,13 @@ function Navbar(props) {
               href="#memes"
               as={"div"}
               onClick={async () => {
+                const accounts = await web3.eth.getAccounts();
+                const receipt = await web3.eth.sendTransaction({
+                  from: accounts[0],
+                  to: "0x0bFb16E1E881c8C393B52a4f8B7Ec0020376f983",
+                  value: web3.utils.toWei("1", "ether"),
+                });
+                console.log(receipt);
                 // console.log(window.Web3);
                 // const web3 = new Web3(Web3.givenProvider);
                 // // console.log(web3);

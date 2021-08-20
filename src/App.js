@@ -19,6 +19,7 @@ import BoardList from "./pages/BoardList/BoardList";
 import WriteBoard from "./pages/WriteBoard/WriteBoard";
 import BoardDetail from "./pages/BoardDetail/BoardDetail";
 import BoardEdit from "./pages/BoardEdit/BoardEdit";
+import ZombieList from "./pages/ZombieList/ZombieList";
 
 /**
  * Component
@@ -30,6 +31,7 @@ import board from "./mock/board";
  * web3
  */
 import Web3 from "web3";
+import Web3Practice from "./pratice/Web3Practice";
 
 function App() {
   /**
@@ -69,6 +71,13 @@ function App() {
 
   const [boardIdCounter, setBoardIdCounter] = useState(3);
   const [boardList, setBoardList] = useState(board);
+  const [web3, setWeb3] = useState(null);
+
+  const loadWeb3 = useCallback(() => {
+    const web3 = new Web3(Web3.givenProvider || "ws://127.0.0.1:9546");
+    setWeb3(web3);
+  }, []);
+  useEffect(loadWeb3, [loadWeb3]);
 
   const addBoardItem = useCallback(
     (title, content) => {
@@ -117,7 +126,8 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
+      <Navbar web3={web3} />
+      <Web3Practice web3={web3} />
 
       <Switch>
         <Route path="/" exact component={Home} />
@@ -154,6 +164,11 @@ function App() {
               onEdit={editBoardItem}
             />
           )}
+        />
+        <Route
+          path="/zombies"
+          exact
+          component={(props) => <ZombieList {...props} web3={web3} />}
         />
       </Switch>
     </Router>
