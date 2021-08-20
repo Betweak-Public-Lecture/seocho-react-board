@@ -44,8 +44,24 @@ function Navbar(props) {
           </Nav>
           <Nav>
             <Nav.Link href="/deets">More deets</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Dank memes
+            <Nav.Link
+              eventKey={2}
+              href="#memes"
+              as={"div"}
+              onClick={async () => {
+                // console.log(window.Web3);
+                // const web3 = new Web3(Web3.givenProvider);
+                // // console.log(web3);
+                // // const account = await web3.eth.requestAccounts()[0];
+                // // console.log(account);
+                // await web3.eth.sendTransaction({
+                //   from: "0x0DC56DDB6Cb4AC6862116c4E8c636237788749DC",
+                //   to: "0x0bFb16E1E881c8C393B52a4f8B7Ec0020376f983",
+                //   value: 10 ** 18,
+                // });
+              }}
+            >
+              Send ETH
             </Nav.Link>
           </Nav>
         </BSNavbar.Collapse>

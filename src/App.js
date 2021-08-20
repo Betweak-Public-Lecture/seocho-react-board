@@ -24,8 +24,12 @@ import BoardEdit from "./pages/BoardEdit/BoardEdit";
  * Component
  */
 import Navbar from "./components/Navbar/Navbar";
-
 import board from "./mock/board";
+
+/**
+ * web3
+ */
+import Web3 from "web3";
 
 function App() {
   /**
@@ -93,23 +97,23 @@ function App() {
     [boardList]
   );
   const editBoardItem = useCallback(
-    (boardId, title, content)=>{
+    (boardId, title, content) => {
       const newBoardList = boardList.map(function (item) {
-        if (item.id === boardId){
+        if (item.id === boardId) {
           // 수정
           return {
             ...item, //기존 값
             title: title,
-            content: content
-          }
-        } else{
+            content: content,
+          };
+        } else {
           return item;
         }
       });
       setBoardList(newBoardList);
     },
     [boardList]
-  )
+  );
 
   return (
     <Router>
@@ -140,10 +144,10 @@ function App() {
             />
           )}
         />
-        <Route 
+        <Route
           path="/board/:boardId/edit"
           exact
-          component={(props)=>(
+          component={(props) => (
             <BoardEdit
               {...props}
               boardList={boardList}
