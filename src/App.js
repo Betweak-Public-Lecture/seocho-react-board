@@ -127,7 +127,7 @@ function App() {
   return (
     <Router>
       <Navbar web3={web3} />
-      <Web3Practice web3={web3} />
+      {/* <Web3Practice web3={web3} /> */}
 
       <Switch>
         <Route path="/" exact component={Home} />
